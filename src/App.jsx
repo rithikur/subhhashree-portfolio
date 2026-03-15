@@ -106,7 +106,23 @@ export default function App() {
         .animate-scan {
           animation: scan-line 3s linear infinite;
         }
+
+        /* Custom Grainy Texture for Premium Feel */
+        .bg-grain {
+          position: relative;
+        }
+        .bg-grain::before {
+          content: "";
+          position: fixed;
+          top: 0; left: 0; width: 100%; height: 100%;
+          opacity: 0.04;
+          z-index: 100;
+          pointer-events: none;
+          background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+        }
       `}} />
+
+      <div className="bg-grain"></div>
 
       {/* Floating Pill Navigation */}
       <div className="fixed top-6 left-0 w-full z-50 px-4 md:px-8 pointer-events-none flex justify-center">
@@ -142,20 +158,34 @@ export default function App() {
         </nav>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Dropdown - Full Screen Transition */}
       {isMenuOpen && (
-        <div className="fixed top-28 left-4 right-4 z-40 bg-[#F9EEBD] border-2 border-[#006400] rounded-3xl p-6 shadow-[6px_6px_0px_#458728] md:hidden">
-          <div className="flex flex-col space-y-4">
-            {navLinks.map((link) => (
+        <div className="fixed inset-0 z-50 bg-[#FEFCD0] flex flex-col p-8 animate-in fade-in duration-300">
+          <div className="flex justify-between items-center mb-12">
+            <span className="text-2xl font-black text-[#006400]">Subhhashree</span>
+            <button onClick={() => setIsMenuOpen(false)} className="bg-[#006400] text-[#FEFCD0] p-3 rounded-full">
+              <X size={28} />
+            </button>
+          </div>
+          <div className="flex flex-col space-y-6">
+            {navLinks.map((link, i) => (
               <button
                 key={link.id}
                 onClick={() => scrollTo(link.id)}
-                className={`text-left text-xl font-black py-3 border-b-2 border-[#006400]/10 ${activeSection === link.id ? 'text-[#006400]' : 'text-[#458728]'
+                className={`text-5xl font-black tracking-tighter text-left transition-all ${activeSection === link.id ? 'text-[#006400]' : 'text-[#458728]/40'
                   }`}
+                style={{ animationDelay: `${i * 100}ms` }}
               >
                 {link.name}
               </button>
             ))}
+          </div>
+          <div className="mt-auto border-t-2 border-[#006400]/10 pt-8">
+            <p className="font-mono text-xs font-bold text-[#458728] uppercase tracking-widest mb-4">Let's build the future</p>
+            <div className="flex gap-4">
+              <a href="mailto:tsubhhashree71@gmail.com" className="w-12 h-12 bg-white border-2 border-[#006400] rounded-full flex items-center justify-center text-[#006400]"><Mail size={20} /></a>
+              <a href="https://www.linkedin.com/in/subhhashree-thirunavukkarasu/" className="w-12 h-12 bg-[#006400] rounded-full flex items-center justify-center text-[#FEFCD0]"><Linkedin size={20} /></a>
+            </div>
           </div>
         </div>
       )}
@@ -195,15 +225,15 @@ export default function App() {
             </div>
           </div>
 
-          <h1 className="text-[17vw] sm:text-[8rem] lg:text-[11rem] font-black leading-none tracking-tighter uppercase flex flex-col mb-10 gap-4 md:gap-8">
+          <h1 className="text-[17vw] sm:text-[8rem] lg:text-[11rem] font-black leading-[0.85] tracking-tighter uppercase flex flex-col mb-10 gap-2 md:gap-8">
             <span className="text-[#006400]">FUTURE</span>
-            <span className="text-stroke-hollow pl-1 md:pl-2">ROBOTICS</span>
+            <span className="text-stroke-hollow">ROBOTICS</span>
             <span className="text-[#006400]">ENGINEER</span>
           </h1>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mt-4 border-t-2 border-[#006400]/10 pt-8">
-            <p className="text-xl md:text-2xl font-medium text-[#458728] max-w-2xl leading-snug">
-              I'm <span className="font-bold text-[#006400] border-b-4 border-[#D0DB61]">Subhhashree T</span>. A Mechatronics Engineering student solving problems, leading initiatives, and teaching others.
+            <p className="text-xl md:text-3xl font-medium text-[#458728] max-w-3xl leading-tight">
+              I am <span className="font-bold text-[#006400] underline decoration-[#D0DB61] decoration-4 underline-offset-4">Subhhashree T</span>. Currently bridging the gap between mechanical systems and intelligent code through Mechatronics at KPRIET.
             </p>
           </div>
         </section>
@@ -215,8 +245,8 @@ export default function App() {
               <div className="w-12 h-1 bg-[#458728] rounded-full"></div>
               <h2 className="text-sm font-bold uppercase tracking-widest text-[#458728]">About Me</h2>
             </div>
-            <p className="text-3xl md:text-5xl lg:text-[4rem] font-medium leading-[1.15] text-[#006400] tracking-tight">
-              An 18-year-old driven by curiosity. I dive deep into <span className="text-stroke-hollow pl-1 pr-1 font-black">new technologies</span>, find fulfillment in <span className="bg-[#D0DB61] px-3 py-1 rounded-xl cursor-pointer hover:bg-[#458728] hover:text-[#FEFCD0] transition-colors inline-block" onClick={(e) => { e.stopPropagation(); triggerHaptic([30, 50, 30]); }}>teaching others</span>, and actively take on leadership roles to make a meaningful impact.
+            <p className="text-3xl md:text-5xl lg:text-[4rem] font-medium leading-[1.1] text-[#006400] tracking-tight">
+              An 18-year-old developer-engineer hybrid. I spend my days decoding complex <span className="text-stroke-hollow font-black">mechanical systems</span> and my nights building digital tools. From winning Math Bees to leading student bodies, I thrive where <span className="bg-[#D0DB61] px-3 py-1 rounded-xl cursor-pointer hover:bg-[#458728] hover:text-[#FEFCD0] transition-colors inline-block" onClick={(e) => { e.stopPropagation(); triggerHaptic([30, 50, 30]); }}>precision meets creativity</span>.
             </p>
           </div>
         </section>
